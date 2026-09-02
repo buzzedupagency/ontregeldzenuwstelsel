@@ -1,0 +1,262 @@
+/* ── HERO ──────────────────────────────────────────────────────── */
+.hero {
+  background-color: var(--color-dark-bg);
+  padding-top: calc(var(--nav-height) + var(--s-9));
+  padding-bottom: var(--s-9);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.heroTop {
+  margin-bottom: var(--s-5);
+}
+
+.metaItem {
+  color: var(--color-text-muted-dark);
+}
+
+.heroHeading {
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  line-height: 0.97;
+  letter-spacing: -0.04em;
+  color: var(--color-dark-text);
+  max-width: 10ch;
+}
+
+.heroBottom {
+  margin-top: var(--s-9);
+  max-width: 480px;
+}
+
+.heroIntro {
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: rgba(242, 240, 233, 0.6);
+}
+
+/* ── CENTRAAL STATEMENT ────────────────────────────────────────── */
+.statement {
+  background-color: var(--color-dark-bg);
+  padding: var(--s-10) 0;
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.statementText {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--color-accent);
+  max-width: 16ch;
+  font-style: normal;
+}
+
+/* ── TIJDLIJN ──────────────────────────────────────────────────── */
+.tijdlijn {
+  background-color: var(--color-bg);
+  padding-top: var(--s-9);
+  padding-bottom: var(--s-10);
+}
+
+.tijdlijnInner {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.tijdlijnNav {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--s-5));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  padding-top: 0.4em;
+}
+
+.tijdlijnLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.tijdlijnDot {
+  position: relative;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  transition:
+    border-color var(--duration-fast),
+    background-color var(--duration-fast);
+}
+
+.tijdlijnDot:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+}
+
+.dotLabel {
+  font-size: 0.4375rem;
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast);
+}
+
+.tijdlijnDot:hover .dotLabel {
+  color: #fff;
+}
+
+.tijdlijnContent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── FASE ──────────────────────────────────────────────────────── */
+.fase {
+  padding: var(--s-7) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.faseAccent {
+  background-color: var(--color-dark-bg);
+  margin: 0 calc(-1 * var(--container-pad));
+  padding: var(--s-7) var(--container-pad);
+  border-bottom: none;
+}
+
+.faseHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.faseNum {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+}
+
+.faseAccent .faseNum {
+  color: var(--color-text-muted-dark);
+}
+
+.faseTitel {
+  font-size: clamp(1.375rem, 2.8vw, 2.125rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.faseTitelAccent {
+  color: var(--color-accent);
+}
+
+.faseAccent .faseTitel {
+  color: var(--color-dark-text);
+}
+
+.faseTag {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  margin-left: auto;
+}
+
+.faseTekst {
+  font-size: var(--text-md);
+  line-height: 1.78;
+  max-width: 640px;
+  color: var(--color-text);
+}
+
+.faseAccent .faseTekst {
+  color: rgba(242, 240, 233, 0.75);
+}
+
+/* Foto placeholder */
+.fotoPlaats {
+  background-color: var(--color-dark-bg);
+  height: 260px;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--s-4);
+  margin-top: var(--s-2);
+}
+
+.fotoLabel {
+  color: var(--color-text-muted-dark);
+}
+
+/* ── PAGE NAV ──────────────────────────────────────────────────── */
+.pageNav {
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: var(--s-7) 0;
+}
+
+.pageNavInner {
+  display: flex;
+  gap: var(--s-9);
+}
+
+.pageNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  transition: opacity var(--duration-fast);
+  max-width: 340px;
+}
+
+.pageNavLink:hover {
+  opacity: 0.68;
+}
+
+.pageNavLabel {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.pageNavTitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tijdlijnInner {
+    grid-template-columns: 1fr;
+  }
+
+  .tijdlijnNav {
+    display: none;
+  }
+
+  .pageNavInner {
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+}
+
+@media (max-width: 640px) {
+  .heroHeading {
+    font-size: clamp(2.75rem, 12vw, 5rem);
+  }
+
+  .statementText {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+  }
+}

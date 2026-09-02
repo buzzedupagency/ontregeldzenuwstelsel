@@ -1,0 +1,208 @@
+/* ── HERO ──────────────────────────────────────────────────────── */
+.hero {
+  background-color: var(--color-dark-bg);
+  padding-top: calc(var(--nav-height) + var(--s-9));
+  padding-bottom: var(--s-9);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--s-9);
+  align-items: start;
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.metaItem {
+  color: var(--color-text-muted-dark);
+}
+
+.heroHeading {
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--color-dark-text);
+}
+
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+  padding-top: 0.2em;
+}
+
+.heroSubtext {
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: rgba(242, 240, 233, 0.62);
+}
+
+/* Traject visual */
+.traject {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--color-border-dark);
+  padding: var(--s-5);
+}
+
+.trajectLabel {
+  color: var(--color-text-muted-dark);
+  font-size: var(--text-xs);
+  display: block;
+  margin-bottom: var(--s-4);
+  letter-spacing: 0.04em;
+}
+
+.trajectItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.trajectStep {
+  color: rgba(242, 240, 233, 0.72);
+  font-size: var(--text-xs);
+  letter-spacing: 0.07em;
+}
+
+.trajectStep.accent {
+  color: var(--color-accent);
+}
+
+.trajectArrow {
+  color: var(--color-border-dark);
+  font-size: var(--text-xs);
+  margin: 3px 0;
+}
+
+/* ── ONDERDELEN ────────────────────────────────────────────────── */
+.onderdelen {
+  background-color: var(--color-bg);
+  padding-top: var(--s-9);
+  padding-bottom: var(--s-10);
+}
+
+.onderdeel {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--s-9);
+  padding: var(--s-7) 0;
+  border-bottom: 1px solid var(--color-border);
+  align-items: start;
+}
+
+.onderdeelHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding-top: 0.1em;
+  position: sticky;
+  top: calc(var(--nav-height) + var(--s-5));
+}
+
+.onderdeelNum {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.onderdeelTitel {
+  font-size: clamp(1.25rem, 2.2vw, 1.875rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.onderdeelTag {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  margin-top: var(--s-1);
+}
+
+.onderdeelBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.onderdeelIntro {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.onderdeelTekst {
+  font-size: var(--text-md);
+  line-height: 1.78;
+  color: var(--color-text);
+  max-width: 580px;
+}
+
+/* ── PAGE NAV ──────────────────────────────────────────────────── */
+.pageNav {
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: var(--s-7) 0;
+}
+
+.pageNavInner {
+  display: flex;
+  gap: var(--s-9);
+}
+
+.pageNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  transition: opacity var(--duration-fast);
+}
+
+.pageNavLink:hover {
+  opacity: 0.68;
+}
+
+.pageNavLabel {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.pageNavTitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+  }
+
+  .onderdeel {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+
+  .onderdeelHeader {
+    position: static;
+  }
+
+  .traject {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pageNavInner {
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+}

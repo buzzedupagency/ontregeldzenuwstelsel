@@ -44,6 +44,7 @@ export default function HomeHerkenning() {
             key={i}
             ref={(el) => { itemRefs.current[i] = el }}
             className={styles.item}
+            data-num={`0${i + 1}`}
             style={{ '--delay': `${i * 80}ms` } as React.CSSProperties}
           >
             <div className="container">

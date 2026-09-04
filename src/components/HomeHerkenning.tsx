@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import styles from './HomeHerkenning.module.css'
 
 const statements = [
@@ -11,6 +12,26 @@ const statements = [
 ]
 
 export default function HomeHerkenning() {
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([])
+
+  useEffect(() => {
+    const observers = itemRefs.current.map((el) => {
+      if (!el) return null
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.classList.add(styles.visible)
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.15 }
+      )
+      obs.observe(el)
+      return obs
+    })
+    return () => observers.forEach((obs) => obs?.disconnect())
+  }, [])
+
   return (
     <section id="herkenning" className={styles.section} aria-labelledby="herkenning-heading">
       <div className="container">
@@ -19,7 +40,12 @@ export default function HomeHerkenning() {
 
       <ul className={styles.list} role="list" aria-label="Herkenbare ervaringen">
         {statements.map((s, i) => (
-          <li key={i} className={styles.item}>
+          <li
+            key={i}
+            ref={(el) => { itemRefs.current[i] = el }}
+            className={styles.item}
+            style={{ '--delay': `${i * 80}ms` } as React.CSSProperties}
+          >
             <div className="container">
               <div className={styles.itemInner}>
                 <span className={`mono ${styles.num}`} aria-hidden="true">0{i + 1}</span>

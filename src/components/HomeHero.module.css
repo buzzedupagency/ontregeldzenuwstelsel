@@ -57,26 +57,27 @@
   line-height: 0.9;
   letter-spacing: -0.045em;
   font-weight: 700;
-  overflow: hidden;
   gap: 0;
+}
+
+.lineWrap {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
 }
 
 .line {
   display: block;
-  opacity: 0;
-  transform: translateY(48px);
-  transition:
-    opacity 0.8s var(--ease-out),
-    transform 0.8s var(--ease-out);
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out);
 }
 
 .line.in {
-  opacity: 1;
   transform: translateY(0);
 }
 
 .lineDelay {
-  transition-delay: 140ms;
+  transition-delay: 160ms;
 }
 
 .break {

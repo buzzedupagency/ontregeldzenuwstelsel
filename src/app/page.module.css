@@ -172,11 +172,11 @@
   display: block;
   padding: var(--s-8) 0;
   border-bottom: 1px solid var(--color-border);
-  transition: opacity var(--duration-fast);
+  overflow: hidden;
 }
 
-.featuredLink:hover {
-  opacity: 0.72;
+.featuredLink:hover .featuredTitle {
+  transform: translateX(var(--s-2));
 }
 
 .featuredMeta {
@@ -195,6 +195,7 @@
   line-height: 1.05;
   letter-spacing: -0.03em;
   max-width: 18ch;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 /* ── ARTICLE LIST ─────────────────────────────────────────────── */
@@ -220,12 +221,16 @@
 
 .articleLink:hover {
   padding-left: var(--s-2);
-  opacity: 0.72;
 }
 
 .articleNum {
   color: var(--color-text-muted);
   font-size: var(--text-xs);
+  transition: color var(--duration-fast);
+}
+
+.articleLink:hover .articleNum {
+  color: var(--color-accent);
 }
 
 .articleTitle {

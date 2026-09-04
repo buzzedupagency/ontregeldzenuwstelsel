@@ -24,11 +24,15 @@ export default function HomeHero() {
         </div>
 
         <h1 id="hero-heading" className={styles.heading}>
-          <span className={`${styles.line} ${loaded ? styles.in : ''}`} aria-label="Ontregeld">
-            ONTREGELD
+          <span className={styles.lineWrap} aria-label="Ontregeld">
+            <span className={`${styles.line} ${loaded ? styles.in : ''}`} aria-hidden="true">
+              ONTREGELD
+            </span>
           </span>
-          <span className={`${styles.line} ${styles.lineDelay} ${loaded ? styles.in : ''}`} aria-label="Zenuwstelsel">
-            ZENUW<span className={styles.break}>STELSEL</span>
+          <span className={styles.lineWrap} aria-label="Zenuwstelsel">
+            <span className={`${styles.line} ${styles.lineDelay} ${loaded ? styles.in : ''}`} aria-hidden="true">
+              ZENUW<span className={styles.break}>STELSEL</span>
+            </span>
           </span>
         </h1>
 

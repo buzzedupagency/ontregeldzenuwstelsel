@@ -46,7 +46,7 @@ export default function Footer() {
             © {year} Ontregeld Zenuwstelsel
           </span>
           <span className="mono" style={{ color: 'var(--color-text-muted-dark)' }}>
-            Geen arts. Geen behandelaar. Wel eerlijk.
+            Geen arts. Geen coach. Wel eerlijk.
           </span>
         </div>
       </div>

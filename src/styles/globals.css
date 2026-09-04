@@ -2,16 +2,27 @@
 
 /* ─── DESIGN TOKENS ──────────────────────────────────────────────── */
 :root {
-  /* Colors */
-  --color-bg: #F2F0E9;
-  --color-text: #111111;
-  --color-dark-bg: #151515;
-  --color-dark-text: #F2F0E9;
-  --color-border: #D8D5CC;
-  --color-border-dark: #2A2A2A;
-  --color-accent: #FF4A27;
-  --color-text-muted: #666660;
+  /* ── Base colors */
+  --color-bg: #F2EFE7;
+  --color-text: #0B0B0B;
+  --color-dark-bg: #0B0B0B;
+  --color-dark-text: #F2EFE7;
+  --color-border: #D4D0C7;
+  --color-border-dark: #222222;
+  --color-accent: #E94722;
+  --color-text-muted: #5C5C56;
   --color-text-muted-dark: #888882;
+
+  /* ── Semantic state tokens */
+  --surface-rest: #F2EFE7;
+  --surface-dark: #0B0B0B;
+  --text-primary: #0B0B0B;
+  --text-muted: #5C5C56;
+  --signal-activation: #E94722;    /* Blood Orange — prikkel / alarm / body */
+  --signal-regulation: #315CFF;    /* Electric Blue — max 3 uses total on site */
+
+  /* ── Easing extensions */
+  --ease-snap: cubic-bezier(0.76, 0, 0.24, 1);
 
   /* Spacing scale */
   --s-1: 8px;

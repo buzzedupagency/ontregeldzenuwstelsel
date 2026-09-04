@@ -5,13 +5,13 @@
   justify-content: flex-end;
   padding-top: calc(var(--nav-height) + var(--s-7));
   padding-bottom: var(--s-8);
-  background-color: var(--color-bg);
-  border-bottom: 2px solid var(--color-accent);
+  background-color: var(--surface-rest);
+  border-bottom: 2px solid var(--signal-activation);
   position: relative;
   overflow: hidden;
 }
 
-/* Animated film-grain texture */
+/* Animated grain — material texture only, not signature effect */
 .hero::after {
   content: '';
   position: absolute;
@@ -19,7 +19,7 @@
   width: 200%;
   height: 200%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.038;
+  opacity: 0.03;
   pointer-events: none;
   z-index: 0;
   animation: grain 1.2s steps(10) infinite;
@@ -29,7 +29,7 @@
   0%   { transform: translate(0%, 0%); }
   10%  { transform: translate(-2%, -4%); }
   20%  { transform: translate(4%, 2%); }
-  30%  { transform: translate(-3%, -6%); }
+  30%  { transform: translate(-3%, -5%); }
   40%  { transform: translate(2%, 4%); }
   50%  { transform: translate(-5%, 1%); }
   60%  { transform: translate(3%, -3%); }
@@ -56,7 +56,7 @@
 }
 
 .label {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
 }
 
 .statusBadge {
@@ -66,12 +66,12 @@
 }
 
 .statusBadge .mono {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   font-size: var(--text-xs);
 }
 
 .dot {
-  color: var(--color-accent);
+  color: var(--signal-activation);
   font-size: 8px;
   animation: pulse 3s ease-in-out infinite;
 }
@@ -81,7 +81,7 @@
   50% { opacity: 0.25; }
 }
 
-/* ── HEADING ────────────────────────────────────────────────────── */
+/* ── HEADING ─────────────────────────────────────────────────────── */
 .heading {
   display: flex;
   flex-direction: column;
@@ -92,31 +92,53 @@
   gap: 0;
 }
 
+/* Clip container for load reveal — scroll drift applied via JS transform */
 .lineWrap {
   display: block;
   overflow: hidden;
   padding-bottom: 0.05em;
 }
 
+/* ── SHUTTER REVEAL ───────────────────────────────────────────────
+   Line 1 enters from bottom-left, Line 2 from bottom-right.
+   Diagonal convergence → "mechanism locking into place" quality.
+   Uses --ease-snap for a hard, mechanical feel.
+*/
 .line {
   display: block;
-  transform: translateY(110%);
-  transition: transform 0.9s var(--ease-out);
+  transform: translateX(-8px) translateY(110%);
+  transition: transform 0.75s var(--ease-snap);
 }
 
 .line.in {
-  transform: translateY(0);
+  transform: translateX(0) translateY(0);
 }
 
+/* Line 2: opposite X offset, delayed */
 .lineDelay {
-  transition-delay: 160ms;
+  transition-delay: 180ms;
+  transform: translateX(8px) translateY(110%);
 }
 
+/* ── INDIVIDUAL CHARACTER SPANS ─────────────────────────────────── */
+/* font-variation-settings updated via JS for proximity effect.
+   display: inline keeps text flow natural without inline-block gaps. */
+.char {
+  display: inline;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+
+/* Applied briefly on mouse-leave for smooth settle-back transition */
+.charSettling {
+  transition: font-variation-settings 420ms var(--ease-out);
+}
+
+/* Mobile break: ZENUW / STELSEL */
 .break {
   display: inline;
 }
 
-/* ── BOTTOM ROW ─────────────────────────────────────────────────── */
+/* ── BOTTOM ROW ──────────────────────────────────────────────────── */
 .bottom {
   display: flex;
   justify-content: space-between;
@@ -129,7 +151,7 @@
   line-height: 1.55;
   font-weight: 400;
   max-width: 520px;
-  color: var(--color-text);
+  color: var(--text-primary);
 }
 
 .desktopBreak {
@@ -149,7 +171,7 @@
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
   padding: 10px var(--s-4);
-  border: 1px solid var(--color-text);
+  border: 1px solid var(--text-primary);
   border-radius: var(--radius-sm);
   display: inline-block;
   transition:
@@ -158,15 +180,15 @@
 }
 
 .cta:hover {
-  background-color: var(--color-text);
-  color: var(--color-bg);
+  background-color: var(--text-primary);
+  color: var(--surface-rest);
 }
 
 .metaLabel {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
 }
 
-/* ─── RESPONSIVE ────────────────────────────────────────────────── */
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .heading {
     font-size: clamp(3.5rem, 14vw, 7rem);
@@ -207,5 +229,17 @@
 
   .metaLabel {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::after {
+    animation: none;
+  }
+
+  .line,
+  .lineDelay {
+    transition: none;
+    transform: none;
   }
 }

@@ -1,20 +1,45 @@
 .section {
-  background-color: var(--color-dark-bg);
+  background-color: var(--surface-dark);
   padding-top: var(--s-9);
   padding-bottom: var(--s-8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* HERKENBAAR? — oversized ghost typography behind the whole scene */
+.section::before {
+  content: 'HERKENBAAR?';
+  position: absolute;
+  bottom: -0.05em;
+  left: calc(var(--container-pad) * 0.4);
+  font-family: var(--font-sans);
+  font-size: clamp(4.5rem, 14vw, 13rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.85;
+  color: rgba(242, 239, 231, 0.05);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
 }
 
 .label {
   color: var(--color-text-muted-dark);
   display: block;
   margin-bottom: var(--s-8);
+  position: relative;
+  z-index: 1;
 }
 
 .list {
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
+/* ── ITEM ────────────────────────────────────────────────────────── */
 .item {
   border-top: 1px solid var(--color-border-dark);
   transition: background-color var(--duration-base) var(--ease-out);
@@ -23,22 +48,11 @@
   overflow: hidden;
 }
 
-.item::before {
-  content: attr(data-num);
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-sans);
-  font-size: clamp(7rem, 22vw, 15rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  color: rgba(242, 240, 233, 0.055);
-  pointer-events: none;
-  user-select: none;
+.item:last-child {
+  border-bottom: 1px solid var(--color-border-dark);
 }
 
+/* Scroll reveal animation */
 @keyframes itemReveal {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -48,14 +62,41 @@
   animation: itemReveal 0.65s var(--ease-out) var(--delay, 0ms) both;
 }
 
-.item:last-child {
-  border-bottom: 1px solid var(--color-border-dark);
+/* ── GHOST NUMBERS ───────────────────────────────────────────────
+   Each item shows its number as a giant background object.
+   Cropped by item overflow:hidden — only a slice is visible.
+   Odd/even items have different right positions for rhythm.
+*/
+.item::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-sans);
+  font-size: clamp(6rem, 22vw, 16rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
+.item:nth-child(odd)::before {
+  right: -0.5%;
+  color: rgba(242, 239, 231, 0.07);
+}
+
+.item:nth-child(even)::before {
+  right: 3%;
+  color: rgba(242, 239, 231, 0.045);
+}
+
+/* Hover background tint */
 .item:hover {
-  background-color: rgba(255, 74, 39, 0.04);
+  background-color: rgba(233, 71, 34, 0.04);
 }
 
+/* ── ITEM INNER ──────────────────────────────────────────────────── */
 .itemInner {
   display: grid;
   grid-template-columns: 48px 1fr;
@@ -76,19 +117,59 @@
   padding-top: 0.35em;
 }
 
+/* ── TEXT + PRIKKEL RESPONSE ─────────────────────────────────────
+   TB-1: PRIKKEL RESPONSE
+   On distort: text-shadow creates an echo/doubling layer.
+   Main text simultaneously displaces. Then settles back to rest.
+   Effect is clearly visible — not a 2px hint.
+   Principle: PRIKKEL → ONTREGELING → HERSTEL.
+*/
 .text {
   font-size: clamp(1.375rem, 3.5vw, 2.625rem);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.2;
-  color: rgba(242, 240, 233, 0.85);
+  color: rgba(242, 239, 231, 0.85);
   transition: color var(--duration-base) var(--ease-out);
+  position: relative;
 }
 
 .item:hover .text {
-  color: #fff;
+  color: rgba(242, 239, 231, 0.97);
 }
 
+@keyframes prikkelResponse {
+  0% {
+    text-shadow: none;
+    transform: translateX(0);
+  }
+  18% {
+    text-shadow:
+      4px 2px 0 rgba(242, 239, 231, 0.30),
+      -2px -1px 0 rgba(242, 239, 231, 0.18);
+    transform: translateX(-3px);
+  }
+  38% {
+    text-shadow:
+      -3px 2px 0 rgba(242, 239, 231, 0.22),
+      2px -1px 0 rgba(242, 239, 231, 0.12);
+    transform: translateX(2.5px);
+  }
+  62% {
+    text-shadow: 2px -1px 0 rgba(242, 239, 231, 0.10);
+    transform: translateX(-1px);
+  }
+  100% {
+    text-shadow: none;
+    transform: translateX(0);
+  }
+}
+
+.item.distorting .text {
+  animation: prikkelResponse 0.55s var(--ease-out) forwards;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .itemInner {
     grid-template-columns: 32px 1fr;
@@ -101,5 +182,27 @@
 
   .text {
     font-size: clamp(1.125rem, 5vw, 1.5rem);
+  }
+
+  .item::before {
+    font-size: clamp(4.5rem, 28vw, 10rem);
+  }
+
+  .section::before {
+    font-size: clamp(3rem, 16vw, 7rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    opacity: 1;
+  }
+
+  .item.visible {
+    animation: none;
+  }
+
+  .item.distorting .text {
+    animation: none;
   }
 }

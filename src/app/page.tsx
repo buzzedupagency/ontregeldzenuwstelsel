@@ -4,6 +4,7 @@ import styles from './page.module.css'
 import HomeHero from '@/components/HomeHero'
 import HomeHerkenning from '@/components/HomeHerkenning'
 import HomeHerstel from '@/components/HomeHerstel'
+import SignalStrip from '@/components/SignalStrip'
 
 export const metadata: Metadata = {
   title: 'Ontregeld Zenuwstelsel — Over stress, prikkels, ADHD & herstel',
@@ -67,6 +68,7 @@ export default function HomePage() {
     <>
       <HomeHero />
       <HomeHerkenning />
+      <SignalStrip />
 
       {/* ── WAT IS HET ─────────────────────────────────────────── */}
       <section className={styles.watIsHet} aria-labelledby="wat-is-het-heading">

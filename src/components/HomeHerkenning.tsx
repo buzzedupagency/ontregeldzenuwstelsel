@@ -13,23 +13,60 @@ const statements = [
 
 export default function HomeHerkenning() {
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
+  const isMobileRef = useRef(false)
 
   useEffect(() => {
-    const observers = itemRefs.current.map((el) => {
+    if (typeof window === 'undefined') return
+    isMobileRef.current = !window.matchMedia('(pointer: fine)').matches
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const triggerDistort = (el: HTMLLIElement) => {
+      if (reducedMotion) return
+      el.classList.remove(styles.distorting)
+      // Force reflow to restart animation when re-entering
+      void el.offsetWidth
+      el.classList.add(styles.distorting)
+    }
+
+    const observers = itemRefs.current.map((el, i) => {
       if (!el) return null
+
+      // Scroll reveal + mobile prikkel trigger
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             el.classList.add(styles.visible)
+            // On touch devices: trigger prikkel once when item enters view
+            if (isMobileRef.current) {
+              setTimeout(() => triggerDistort(el), 350 + i * 80)
+            }
             obs.disconnect()
           }
         },
-        { threshold: 0.15 }
+        { threshold: 0.25 }
       )
       obs.observe(el)
       return obs
     })
-    return () => observers.forEach((obs) => obs?.disconnect())
+
+    // Desktop hover handlers attached imperatively so we can control animation restart
+    if (!isMobileRef.current) {
+      const handlers: (() => void)[] = []
+
+      itemRefs.current.forEach((el) => {
+        if (!el) return
+        const onEnter = () => triggerDistort(el)
+        el.addEventListener('mouseenter', onEnter)
+        handlers.push(() => el.removeEventListener('mouseenter', onEnter))
+      })
+
+      return () => {
+        observers.forEach(obs => obs?.disconnect())
+        handlers.forEach(cleanup => cleanup())
+      }
+    }
+
+    return () => observers.forEach(obs => obs?.disconnect())
   }, [])
 
   return (
@@ -42,7 +79,7 @@ export default function HomeHerkenning() {
         {statements.map((s, i) => (
           <li
             key={i}
-            ref={(el) => { itemRefs.current[i] = el }}
+            ref={el => { itemRefs.current[i] = el }}
             className={styles.item}
             data-num={`0${i + 1}`}
             style={{ '--delay': `${i * 80}ms` } as React.CSSProperties}
@@ -50,7 +87,7 @@ export default function HomeHerkenning() {
             <div className="container">
               <div className={styles.itemInner}>
                 <span className={`mono ${styles.num}`} aria-hidden="true">0{i + 1}</span>
-                <p className={styles.text}>{s}</p>
+                <p className={styles.text} data-text={s}>{s}</p>
               </div>
             </div>
           </li>

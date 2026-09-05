@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-/* Animated grain — material texture only, not signature effect */
+/* Grain — material texture only, not a signature interaction */
 .hero::after {
   content: '';
   position: absolute;
@@ -39,6 +39,27 @@
   100% { transform: translate(3%, -2%); }
 }
 
+/* ── BLOOD ORANGE ACCENT STRIP ──────────────────────────────────────
+   First major compositional use of Blood Orange in the layout.
+   Positioned via JS to run behind the ZENUWSTELSEL line.
+   Enters from left on load, then stays completely still.
+*/
+.accentStrip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: clamp(16px, 2.2vw, 30px);
+  background-color: var(--signal-activation);
+  z-index: 1;
+  transform: translateX(-100%);
+  animation: stripEnter 0.6s var(--ease-snap) 50ms both;
+}
+
+@keyframes stripEnter {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
 .inner {
   display: flex;
   flex-direction: column;
@@ -46,7 +67,7 @@
   height: 100%;
   justify-content: space-between;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .topRow {
@@ -92,43 +113,56 @@
   gap: 0;
 }
 
-/* Clip container for load reveal — scroll drift applied via JS transform */
+/* Clip container: hides chars above lineWrap during drop entry.
+   JS applies translateX for scroll drift on this element. */
 .lineWrap {
   display: block;
   overflow: hidden;
   padding-bottom: 0.05em;
 }
 
-/* ── SHUTTER REVEAL ───────────────────────────────────────────────
-   Line 1 enters from bottom-left, Line 2 from bottom-right.
-   Diagonal convergence → "mechanism locking into place" quality.
-   Uses --ease-snap for a hard, mechanical feel.
+/* ── LETTER DROP ASSEMBLY ─────────────────────────────────────────
+   Each character falls from above its natural position into place.
+   -130% starts the char above the lineWrap clip region at all sizes.
+   3px overshoot at 72% → brief 1.5px rebound → settle at 0.
+   Principle: ONTREGELING → ASSEMBLY → RUST.
 */
-.line {
-  display: block;
-  transform: translateX(-8px) translateY(110%);
-  transition: transform 0.75s var(--ease-snap);
+@keyframes charDrop {
+  0%   { transform: translateY(-130%); }
+  72%  { transform: translateY(3px); }
+  87%  { transform: translateY(-1.5px); }
+  100% { transform: translateY(0); }
 }
 
-.line.in {
-  transform: translateX(0) translateY(0);
+/* ── TYPOGRAPHIC ECHO ─────────────────────────────────────────────
+   Offset ghost via ::after — visible during the fall, gone by settle.
+   Creates the impression of typography sharpening into focus.
+   Not glitch, not RGB split — a clean transient displacement.
+*/
+@keyframes charEcho {
+  0%   { opacity: 0.28; transform: translate(6px, -5px); }
+  65%  { opacity: 0.09; transform: translate(2.5px, -2px); }
+  100% { opacity: 0;    transform: translate(0, 0); }
 }
 
-/* Line 2: opposite X offset, delayed */
-.lineDelay {
-  transition-delay: 180ms;
-  transform: translateX(8px) translateY(110%);
-}
-
-/* ── INDIVIDUAL CHARACTER SPANS ─────────────────────────────────── */
-/* font-variation-settings updated via JS for proximity effect.
-   display: inline keeps text flow natural without inline-block gaps. */
 .char {
-  display: inline;
+  display: inline-block;
+  position: relative;
   font-variation-settings: 'wdth' 100, 'wght' 700;
+  animation: charDrop 540ms var(--ease-out) var(--char-delay, 0ms) both;
 }
 
-/* Applied briefly on mouse-leave for smooth settle-back transition */
+.char::after {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: currentColor;
+  pointer-events: none;
+  animation: charEcho 540ms var(--ease-out) var(--char-delay, 0ms) both;
+}
+
+/* Applied on proximity mouse-leave for smooth width settle-back */
 .charSettling {
   transition: font-variation-settings 420ms var(--ease-out);
 }
@@ -193,6 +227,10 @@
   .heading {
     font-size: clamp(3.5rem, 14vw, 7rem);
   }
+
+  .accentStrip {
+    height: clamp(11px, 3vw, 20px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -237,9 +275,16 @@
     animation: none;
   }
 
-  .line,
-  .lineDelay {
-    transition: none;
+  .char {
+    animation: none;
+  }
+
+  .char::after {
+    display: none;
+  }
+
+  .accentStrip {
+    animation: none;
     transform: none;
   }
 }

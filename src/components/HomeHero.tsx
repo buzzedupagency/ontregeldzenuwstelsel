@@ -1,23 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import styles from './HomeHero.module.css'
 
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 const SCRAMBLE_TARGET = 'SYSTEEM ONLINE'
 
-// wdth axis: 75 (condensed) → 100 (normal/baseline)
-// Cursor = pressure → letters condense. Cursor leaves → letters settle back to wide.
+// wdth axis: 100 (baseline/wide) → 75 (condensed under cursor pressure)
 const WDTH_REST = 100
 const WDTH_PRESS = 75
-const PROXIMITY_RADIUS = 200 // px
+const PROXIMITY_RADIUS = 200
 
-function CharSpans({ text }: { text: string }) {
+const CHAR_STAGGER = 15       // ms between each character in a word
+const LINE2_DELAY = 150       // ms — ZENUWSTELSEL line starts after ONTREGELD begins
+const ZENUW_LEN = 5           // chars in "ZENUW" — used to calculate STELSEL offset
+
+function CharSpans({ text, startDelay = 0 }: { text: string; startDelay?: number }) {
   return (
     <>
       {text.split('').map((char, i) => (
-        <span key={i} className={styles.char} data-char>
+        <span
+          key={i}
+          className={styles.char}
+          data-char={char}
+          style={{ '--char-delay': `${startDelay + i * CHAR_STAGGER}ms` } as React.CSSProperties}
+        >
           {char}
         </span>
       ))}
@@ -26,17 +34,11 @@ function CharSpans({ text }: { text: string }) {
 }
 
 export default function HomeHero() {
-  const [loaded, setLoaded] = useState(false)
   const scrambleRef = useRef<HTMLSpanElement>(null)
   const heroRef = useRef<HTMLElement>(null)
   const lineWrap1Ref = useRef<HTMLSpanElement>(null)
   const lineWrap2Ref = useRef<HTMLSpanElement>(null)
-
-  // ── Load reveal trigger
-  useEffect(() => {
-    const t = requestAnimationFrame(() => setLoaded(true))
-    return () => cancelAnimationFrame(t)
-  }, [])
+  const stripRef = useRef<HTMLDivElement>(null)
 
   // ── SYSTEEM ONLINE scramble
   useEffect(() => {
@@ -61,7 +63,25 @@ export default function HomeHero() {
     return () => { clearTimeout(timer); cancelAnimationFrame(rafId) }
   }, [])
 
-  // ── Pointer proximity (fine pointer / desktop only, starts after reveal)
+  // ── Blood Orange strip: positioned vertically behind the ZENUWSTELSEL line
+  useEffect(() => {
+    const hero = heroRef.current
+    const lineWrap2 = lineWrap2Ref.current
+    const strip = stripRef.current
+    if (!hero || !lineWrap2 || !strip) return
+
+    const setPosition = () => {
+      const heroRect = hero.getBoundingClientRect()
+      const lineRect = lineWrap2.getBoundingClientRect()
+      strip.style.top = `${lineRect.top - heroRect.top + lineRect.height * 0.2}px`
+    }
+
+    setPosition()
+    window.addEventListener('resize', setPosition)
+    return () => window.removeEventListener('resize', setPosition)
+  }, [])
+
+  // ── Pointer proximity — secondary interaction, activates after letter drop
   useEffect(() => {
     const hero = heroRef.current
     if (!hero) return
@@ -112,7 +132,7 @@ export default function HomeHero() {
       }, 500)
     }
 
-    // Delay start until reveal animation is done
+    // Wait for letter drop to settle before attaching proximity
     const initTimer = setTimeout(() => {
       hero.addEventListener('mousemove', onMove, { passive: true })
       hero.addEventListener('mouseleave', onLeave)
@@ -126,7 +146,7 @@ export default function HomeHero() {
     }
   }, [])
 
-  // ── Scroll drift: two lines move in opposite directions as hero exits
+  // ── Scroll drift: lines separate as hero exits viewport
   useEffect(() => {
     const wrap1 = lineWrap1Ref.current
     const wrap2 = lineWrap2Ref.current
@@ -149,6 +169,9 @@ export default function HomeHero() {
 
   return (
     <section ref={heroRef} className={styles.hero} aria-labelledby="hero-heading">
+      {/* Blood Orange compositional band — enters from left, then static */}
+      <div ref={stripRef} className={styles.accentStrip} aria-hidden="true" />
+
       <div className={`container ${styles.inner}`}>
         <div className={styles.topRow}>
           <span className={`mono ${styles.label}`}>// OVER STRESS, PRIKKELS, ADHD &amp; HERSTEL</span>
@@ -160,15 +183,15 @@ export default function HomeHero() {
 
         <h1 id="hero-heading" className={styles.heading}>
           <span ref={lineWrap1Ref} className={styles.lineWrap} aria-label="Ontregeld">
-            <span className={`${styles.line} ${loaded ? styles.in : ''}`} aria-hidden="true">
-              <CharSpans text="ONTREGELD" />
+            <span aria-hidden="true">
+              <CharSpans text="ONTREGELD" startDelay={0} />
             </span>
           </span>
           <span ref={lineWrap2Ref} className={styles.lineWrap} aria-label="Zenuwstelsel">
-            <span className={`${styles.line} ${styles.lineDelay} ${loaded ? styles.in : ''}`} aria-hidden="true">
-              <CharSpans text="ZENUW" />
+            <span aria-hidden="true">
+              <CharSpans text="ZENUW" startDelay={LINE2_DELAY} />
               <span className={styles.break}>
-                <CharSpans text="STELSEL" />
+                <CharSpans text="STELSEL" startDelay={LINE2_DELAY + ZENUW_LEN * CHAR_STAGGER} />
               </span>
             </span>
           </span>

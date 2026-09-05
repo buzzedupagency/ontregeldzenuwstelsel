@@ -103,12 +103,18 @@
   gap: var(--s-5);
   align-items: center;
   padding: clamp(28px, 3.5vw, 56px) 0;
-  transition: padding-left var(--duration-base) var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out), padding-left var(--duration-base) var(--ease-out);
 }
 
 .item:hover .itemInner {
-  padding-left: var(--s-1);
+  transform: translateX(var(--s-1));
 }
+
+/* Asymmetric base positions — editorial cascade, each item reads at a different depth */
+.item[data-variant="b"] .itemInner { padding-left: var(--s-8); }
+.item[data-variant="c"] .itemInner { padding-left: var(--s-5); }
+.item[data-variant="d"] .itemInner { padding-left: var(--s-10); }
+.item[data-variant="e"] .itemInner { padding-left: var(--s-6); }
 
 .num {
   color: var(--color-text-muted-dark);
@@ -177,6 +183,13 @@
   }
 
   .item:hover .itemInner {
+    transform: none;
+  }
+
+  .item[data-variant="b"] .itemInner,
+  .item[data-variant="c"] .itemInner,
+  .item[data-variant="d"] .itemInner,
+  .item[data-variant="e"] .itemInner {
     padding-left: 0;
   }
 

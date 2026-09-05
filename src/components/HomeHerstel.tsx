@@ -5,14 +5,14 @@ import { useState } from 'react'
 import styles from './HomeHerstel.module.css'
 
 const items = [
-  { num: '01', label: 'RUST', href: '/herstel#rust', desc: 'Leren dat rust geen beloning is die je eerst moet verdienen.' },
-  { num: '02', label: 'BEWEGEN', href: '/herstel#bewegen', desc: 'Beweging als tool, niet als prestatie.' },
-  { num: '03', label: 'PRIKKELS', href: '/herstel#prikkels', desc: 'Begrijpen wat er binnen komt en wat dat doet.' },
-  { num: '04', label: 'SLAAP', href: '/herstel#slaap', desc: 'Niet alleen uren maar ook kwaliteit en ritme.' },
-  { num: '05', label: 'STRUCTUUR', href: '/herstel#structuur', desc: 'Kleine vaste punten als houvast, niet als discipline.' },
-  { num: '06', label: 'THERAPIE', href: '/herstel#therapie', desc: 'Wat het kan zijn, en waarom het soms ook niet past.' },
-  { num: '07', label: 'ADHD', href: '/herstel#adhd', desc: 'Een diagnose halverwege het traject, en wat dat veranderde.' },
-  { num: '08', label: 'WERK / OPNIEUW OPBOUWEN', href: '/herstel#werk', desc: 'Terugkeren — langzamer, maar bewuster.' },
+  { num: '01', label: 'RUST', href: '/herstel#rust', freq: 'low' as const, desc: 'Leren dat rust geen beloning is die je eerst moet verdienen.' },
+  { num: '02', label: 'BEWEGEN', href: '/herstel#bewegen', freq: 'mid' as const, desc: 'Beweging als tool, niet als prestatie.' },
+  { num: '03', label: 'PRIKKELS', href: '/herstel#prikkels', freq: 'high' as const, desc: 'Begrijpen wat er binnen komt en wat dat doet.' },
+  { num: '04', label: 'SLAAP', href: '/herstel#slaap', freq: 'low' as const, desc: 'Niet alleen uren maar ook kwaliteit en ritme.' },
+  { num: '05', label: 'STRUCTUUR', href: '/herstel#structuur', freq: 'mid' as const, desc: 'Kleine vaste punten als houvast, niet als discipline.' },
+  { num: '06', label: 'THERAPIE', href: '/herstel#therapie', freq: 'low' as const, desc: 'Wat het kan zijn, en waarom het soms ook niet past.' },
+  { num: '07', label: 'ADHD', href: '/herstel#adhd', freq: 'high' as const, desc: 'Een diagnose halverwege het traject, en wat dat veranderde.' },
+  { num: '08', label: 'WERK / OPNIEUW OPBOUWEN', href: '/herstel#werk', freq: 'mid' as const, desc: 'Terugkeren — langzamer, maar bewuster.' },
 ]
 
 export default function HomeHerstel() {
@@ -36,6 +36,7 @@ export default function HomeHerstel() {
               <li
                 key={item.num}
                 className={`${styles.item} ${activeIdx === i ? styles.active : ''}`}
+                data-freq={item.freq}
                 onMouseEnter={() => setActiveIdx(i)}
                 onMouseLeave={() => setActiveIdx(null)}
               >

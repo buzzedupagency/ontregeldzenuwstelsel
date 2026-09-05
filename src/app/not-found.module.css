@@ -2,33 +2,57 @@
   min-height: 100svh;
   display: flex;
   align-items: center;
-  background-color: var(--color-bg);
+  background-color: var(--color-accent);
   padding-top: var(--nav-height);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ghost FOUT behind content — system error state */
+.section::before {
+  content: 'FOUT';
+  position: absolute;
+  bottom: -0.06em;
+  right: -0.02em;
+  font-size: clamp(8rem, 38vw, 26rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.07);
+  pointer-events: none;
+  user-select: none;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
   gap: var(--s-6);
+  position: relative;
+  z-index: 1;
 }
 
 .code {
-  color: var(--color-accent);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.22);
+  display: block;
 }
 
 .heading {
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  line-height: 1.0;
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.85);
   max-width: 14ch;
 }
 
 .sub {
   font-size: var(--text-md);
   line-height: 1.65;
-  color: var(--color-text-muted);
+  color: rgba(0, 0, 0, 0.55);
   max-width: 420px;
 }
 
@@ -40,15 +64,26 @@
   align-items: center;
   gap: var(--s-2);
   padding: var(--s-3) var(--s-5);
-  border: 1px solid var(--color-text);
+  border: 1px solid rgba(0, 0, 0, 0.35);
   border-radius: var(--radius-sm);
   margin-top: var(--s-3);
+  color: rgba(0, 0, 0, 0.85);
   transition:
     background-color var(--duration-fast),
-    color var(--duration-fast);
+    border-color var(--duration-fast);
 }
 
 .cta:hover {
-  background-color: var(--color-text);
-  color: var(--color-bg);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 640px) {
+  .heading {
+    font-size: clamp(1.75rem, 9vw, 3rem);
+  }
+
+  .code {
+    font-size: clamp(3rem, 16vw, 6rem);
+  }
 }

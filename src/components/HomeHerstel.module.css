@@ -99,6 +99,40 @@
   transform: translateX(0);
 }
 
+/* ── FREQUENCY STATES ────────────────────────────────────────────
+   low  = quieter, more air, lighter type — RUST / SLAAP / THERAPIE
+   high = denser, heavier, more presence — PRIKKELS / ADHD
+   Principle: PRIKKEL → REACTIE → HERSTEL encoded in visual density.
+*/
+
+/* low: gentler items breathe more */
+.item[data-freq="low"] .itemLink {
+  padding-top: clamp(12px, 1.4vw, 18px);
+  padding-bottom: clamp(12px, 1.4vw, 18px);
+}
+
+.item[data-freq="low"] .itemLabel {
+  font-size: clamp(0.875rem, 1.4vw, 1.0625rem);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.item[data-freq="low"].active .itemLabel {
+  color: var(--color-accent);
+}
+
+/* high: heavier items occupy more space */
+.item[data-freq="high"] .itemLink {
+  padding-top: clamp(24px, 2.6vw, 38px);
+  padding-bottom: clamp(24px, 2.6vw, 38px);
+}
+
+.item[data-freq="high"] .itemLabel {
+  font-size: clamp(1.0625rem, 1.9vw, 1.4375rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
 /* ── RIGHT PANEL ───────────────────────────────────────────────── */
 @keyframes descReveal {
   from { opacity: 0; transform: translateY(10px); }

@@ -66,55 +66,71 @@ const sampleArticles = [
 export default function HomePage() {
   return (
     <>
+      {/* STATE 01 — RUST / LATENTE SPANNING */}
       <HomeHero />
+
+      {/* STATE 02 — ACTIVATIE */}
       <HomeHerkenning />
+
+      {/* STATE 03 — OVERGANG */}
       <SignalStrip />
 
-      {/* ── WAT IS HET ─────────────────────────────────────────── */}
-      <section className={styles.watIsHet} aria-labelledby="wat-is-het-heading">
-        <div className={`container ${styles.watIsHetInner}`}>
-          <div className={styles.watIsHetLeft}>
-            <h2 id="wat-is-het-heading" className={styles.watIsHetHeading}>
-              OKÉ.<br />
-              MAAR WAT ÍS<br />
-              EEN ONTREGELD<br />
-              ZENUWSTELSEL?
-            </h2>
+      {/* STATE 04 — BEGRIJPEN ─────────────────────────────────────── */}
+      <section className={styles.watIsHet} aria-label="Wat is een ontregeld zenuwstelsel?">
+        <div className="container">
+
+          {/* Compositional heading: oversized ONTREGELD + right-aligned ZENUWSTELSEL? */}
+          <div className={styles.watIsHetCompose}>
+            <span className={`mono ${styles.watIsHetContext}`}>// OKÉ. MAAR WAT ÍS EEN</span>
+            <h2 className={styles.watIsHetBig}>ONTREGELD</h2>
+            <span className={styles.watIsHetSub}>ZENUWSTELSEL?</span>
           </div>
-          <div className={styles.watIsHetRight}>
-            <p className={styles.watIsHetBody}>
-              &#8220;Ontregeld zenuwstelsel&#8221; is een term die online heel breed wordt gebruikt — van burn-out tot overprikkeling tot ADHD tot chronische stress.
-            </p>
-            <p className={styles.watIsHetBody}>
-              Deze site probeert juist onderscheid te maken tussen wat we weten, wat mensen ervaren, en waar internettaal begint.
-            </p>
-            <Link href="/wat-is-het" className={styles.textLink}>
-              LEES DE UITLEG →
-            </Link>
-            <div className={styles.disclaimers}>
-              <span className="mono">GEEN DIAGNOSE</span>
-              <span className="mono">GEEN WONDERMIDDEL</span>
-              <span className="mono accent">WEL UITLEG + ERVARING</span>
+
+          <div className={styles.watIsHetBody}>
+            <div className={styles.watIsHetLeft}>
+              <p className={styles.watIsHetBodyText}>
+                &#8220;Ontregeld zenuwstelsel&#8221; is een term die online heel breed wordt gebruikt — van burn-out tot overprikkeling tot ADHD tot chronische stress.
+              </p>
+              <p className={styles.watIsHetBodyText}>
+                Deze site probeert juist onderscheid te maken tussen wat we weten, wat mensen ervaren, en waar internettaal begint.
+              </p>
+              <Link href="/wat-is-het" className={styles.textLink}>
+                LEES DE UITLEG →
+              </Link>
+            </div>
+            <div className={styles.watIsHetRight}>
+              <div className={styles.disclaimers}>
+                <span className={styles.disclaimerItem}>GEEN DIAGNOSE.</span>
+                <span className={styles.disclaimerItem}>GEEN WONDERMIDDEL.</span>
+                <span className={`${styles.disclaimerItem} ${styles.accent}`}>WEL UITLEG + ERVARING.</span>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* ── MIJN VERHAAL ───────────────────────────────────────── */}
-      <section className={styles.verhaal} aria-labelledby="verhaal-heading">
+      {/* STATE 05 — PERSOONLIJK ─────────────────────────────────────── */}
+      <section className={styles.verhaal} aria-label="Mijn verhaal">
         <div className={`container ${styles.verhaalInner}`}>
-          <div className={styles.verhaalImageBlock}>
-            <div className={styles.verhaalPlaceholder} aria-hidden="true">
-              <span className={`mono ${styles.placeholderLabel}`}>// FOTO VOLGT</span>
-              <p className={styles.placeholderNote}>
-                Documentaire fotografie<br />
-                van het echte hersteltraject.
-              </p>
+
+          {/* Art-directed photo frame — placeholder for documentary photography */}
+          <div className={styles.photoFrame} role="img" aria-label="Foto volgt — documentaire fotografie">
+            <div className={styles.frameCropTL} aria-hidden="true" />
+            <div className={styles.frameCropTR} aria-hidden="true" />
+            <div className={styles.frameCropBL} aria-hidden="true" />
+            <div className={styles.frameCropBR} aria-hidden="true" />
+            <span className={styles.frameIndex} aria-hidden="true">FOTO 001</span>
+            <span className={styles.frameGhost} aria-hidden="true">001</span>
+            <div className={styles.frameFooter} aria-hidden="true">
+              <span className={styles.frameLabel}>// FOTO VOLGT</span>
+              <span className={styles.frameCoords}>51°N 4°E</span>
             </div>
           </div>
+
           <div className={styles.verhaalContent}>
             <span className={`mono ${styles.sectionLabel}`}>// MIJN VERHAAL</span>
-            <h2 id="verhaal-heading" className={styles.verhaalHeading}>
+            <h2 className={styles.verhaalStatement}>
               IK BEGON DIT NIET<br />
               OMDAT IK ZO<br />
               GEÏNTERESSEERD WAS<br />
@@ -127,30 +143,34 @@ export default function HomePage() {
               LEES MIJN VERHAAL →
             </Link>
           </div>
+
         </div>
       </section>
 
+      {/* STATE 06 — HERSTEL */}
       <HomeHerstel />
 
-      {/* ── ARTIKELEN ──────────────────────────────────────────── */}
+      {/* STATE 07 — VERDIEPING ──────────────────────────────────────── */}
       <section className={styles.artikelen} aria-labelledby="artikelen-heading">
         <div className="container">
+
           <div className={styles.artikelenHeader}>
-            <h2 id="artikelen-heading" className={styles.artikelenTitle}>ARTIKELEN</h2>
+            <span className={`mono ${styles.artikelenTitle}`}>// ARTIKELEN</span>
             <Link href="/artikelen" className={styles.artikelenLink}>
               ALLES ZIEN →
             </Link>
           </div>
 
-          {/* Featured */}
+          {/* Featured — editorial poster */}
           <div className={styles.featuredArticle}>
+            <span className={styles.featuredNum} aria-hidden="true">01</span>
             <Link href={`/artikelen/${sampleArticles[0].slug}`} className={styles.featuredLink}>
               <div className={styles.featuredMeta}>
                 <span className={`mono ${styles.newTag}`}>NIEUW</span>
-                <span className="mono">{sampleArticles[0].category}</span>
-                <span className="mono" style={{ color: 'var(--color-text-muted)' }}>{sampleArticles[0].readtime}</span>
+                <span className="mono" style={{ color: 'var(--text-muted)', fontSize: 'var(--text-xs)', letterSpacing: '0.06em' }}>{sampleArticles[0].category}</span>
+                <span className="mono" style={{ color: 'var(--text-muted)', fontSize: 'var(--text-xs)', letterSpacing: '0.06em' }}>{sampleArticles[0].readtime}</span>
               </div>
-              <h3 className={styles.featuredTitle}>{sampleArticles[0].title}</h3>
+              <h2 id="artikelen-heading" className={styles.featuredTitle}>{sampleArticles[0].title}</h2>
             </Link>
           </div>
 
@@ -159,7 +179,7 @@ export default function HomePage() {
             {sampleArticles.slice(1).map((article) => (
               <li key={article.num} className={styles.articleItem}>
                 <Link href={`/artikelen/${article.slug}`} className={styles.articleLink}>
-                  <span className={`mono ${styles.articleNum}`}>{article.num}</span>
+                  <span className={styles.articleNum} aria-hidden="true">{article.num}</span>
                   <span className={styles.articleTitle}>{article.title}</span>
                   <span className={styles.articleRight}>
                     <span className={`mono ${styles.articleCat}`}>{article.category}</span>
@@ -169,33 +189,37 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
+
         </div>
       </section>
 
-      {/* ── SLOTSECTIE ─────────────────────────────────────────── */}
-      <section className={styles.slot} aria-labelledby="slot-heading">
+      {/* STATE 08 — RELEASE ─────────────────────────────────────────── */}
+      <section className={styles.slot} aria-label="Niet alles hoeft vandaag opgelost">
         <div className={`container ${styles.slotInner}`}>
-          <div className={styles.slotLeft}>
-            <h2 id="slot-heading" className={styles.slotHeading}>
-              NIET ALLES HOEFT<br />
-              VANDAAG OPGELOST.
-            </h2>
-            <p className={styles.slotBody}>
+
+          {/* Poster: fill / outline / fill */}
+          <div className={styles.slotTypography}>
+            <span className={styles.slotLine1}>NIET ALLES HOEFT</span>
+            <span className={styles.slotLineOutline}>VANDAAG</span>
+            <span className={styles.slotLine3}>OPGELOST.</span>
+          </div>
+
+          <div className={styles.slotBottom}>
+            <p className={styles.slotBodyText}>
               Deze site groeit mee met wat ik leer, lees en ervaar. Soms is het uitleg. Soms een persoonlijk verhaal. Soms gewoon iets wat handig is om vandaag te proberen.
             </p>
             <div className={styles.slotLinks}>
               <Link href="/artikelen" className={styles.slotCta}>
                 LEES DE ARTIKELEN →
               </Link>
+              <p className={`mono ${styles.slotMono}`}>
+                // PERSOONLIJK<br />
+                // GEEN DIAGNOSE<br />
+                // WEL EERLIJK
+              </p>
             </div>
           </div>
-          <div className={styles.slotRight}>
-            <p className={`mono ${styles.slotMono}`}>
-              // PERSOONLIJK<br />
-              // GEEN DIAGNOSE<br />
-              // WEL EERLIJK
-            </p>
-          </div>
+
         </div>
       </section>
     </>

@@ -74,6 +74,15 @@ const onderdelen = [
   },
 ]
 
+const traject = [
+  { label: 'DOORGAAN', size: 'sm' },
+  { label: 'SIGNALEN', size: 'md' },
+  { label: 'STOPPEN', size: 'lg' },
+  { label: 'STABILISEREN', size: 'md' },
+  { label: 'OPBOUWEN', size: 'md' },
+  { label: '???', size: 'unknown' },
+] as const
+
 export default function HerstellPage() {
   return (
     <>
@@ -95,10 +104,10 @@ export default function HerstellPage() {
               </p>
               <div className={styles.traject} aria-label="Mijn hersteltraject schematisch">
                 <span className={`mono ${styles.trajectLabel}`}>// MIJN TRAJECT</span>
-                {['DOORGAAN', 'SIGNALEN', 'STOPPEN', 'STABILISEREN', 'VOORZICHTIG OPBOUWEN', '???'].map((step, i, arr) => (
-                  <div key={step} className={styles.trajectItem}>
-                    <span className={`mono ${styles.trajectStep} ${step === '???' ? styles.accent : ''}`}>{step}</span>
-                    {i < arr.length - 1 && <span className={`mono ${styles.trajectArrow}`} aria-hidden="true">↓</span>}
+                {traject.map((step, i) => (
+                  <div key={step.label} className={styles.trajectItem}>
+                    <span className={styles.trajectStep} data-size={step.size}>{step.label}</span>
+                    {i < traject.length - 1 && <span className={`mono ${styles.trajectArrow}`} aria-hidden="true">↓</span>}
                   </div>
                 ))}
               </div>

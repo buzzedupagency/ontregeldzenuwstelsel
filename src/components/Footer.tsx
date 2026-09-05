@@ -6,6 +6,7 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer} role="contentinfo">
+      <div className={styles.ghostWordmark} aria-hidden="true">ONTREGELD ZENUWSTELSEL</div>
       <div className={`container ${styles.inner}`}>
         <div className={styles.top}>
           <div className={styles.wordmarkBlock}>
@@ -45,8 +46,8 @@ export default function Footer() {
           <span className="mono" style={{ color: 'var(--color-text-muted-dark)' }}>
             © {year} Ontregeld Zenuwstelsel
           </span>
-          <span className="mono" style={{ color: 'var(--color-text-muted-dark)' }}>
-            Geen arts. Geen coach. Wel eerlijk.
+          <span className={`mono ${styles.disclaimer}`}>
+            GEEN ARTS. GEEN COACH. WEL EERLIJK.
           </span>
         </div>
       </div>

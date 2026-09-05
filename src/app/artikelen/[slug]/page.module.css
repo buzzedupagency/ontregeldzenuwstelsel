@@ -84,19 +84,19 @@
 
 /* ── QUOTE ─────────────────────────────────────────────────────── */
 .quote {
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  padding: var(--s-7) 0;
-  margin: var(--s-5) 0;
+  border-top: 2px solid var(--color-accent);
+  padding: var(--s-8) 0;
+  margin: var(--s-7) 0;
 }
 
 .quote p {
-  font-size: clamp(1.1875rem, 2.2vw, 1.625rem);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.375rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: var(--color-text);
   font-style: normal;
+  max-width: 580px;
 }
 
 /* ── MEER ──────────────────────────────────────────────────────── */

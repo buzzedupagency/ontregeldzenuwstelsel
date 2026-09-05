@@ -159,6 +159,35 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--duration-slow) var(--ease-out);
+  overflow: hidden;
+}
+
+/* Blood Orange top accent */
+.mobileMenu::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  z-index: 2;
+}
+
+/* Ghost MENU typography behind links */
+.mobileMenu::before {
+  content: 'MENU';
+  position: absolute;
+  bottom: -0.08em;
+  right: -0.02em;
+  font-size: clamp(7rem, 35vw, 20rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: rgba(242, 239, 231, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 .mobileMenu.open {

@@ -67,13 +67,35 @@
 }
 
 .trajectStep {
-  color: rgba(242, 240, 233, 0.72);
-  font-size: var(--text-xs);
-  letter-spacing: 0.07em;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  line-height: 1.3;
 }
 
-.trajectStep.accent {
-  color: var(--color-accent);
+/* Typographic weight system — PRIKKEL→REACTIE→HERSTEL encoded as density */
+.trajectStep[data-size="sm"] {
+  font-size: 0.5625rem;
+  color: rgba(242, 240, 233, 0.38);
+}
+
+.trajectStep[data-size="md"] {
+  font-size: var(--text-xs);
+  color: rgba(242, 240, 233, 0.62);
+}
+
+.trajectStep[data-size="lg"] {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: rgba(242, 240, 233, 0.88);
+  letter-spacing: -0.01em;
+}
+
+/* Electric Blue — unknown/unfinished state (one of ~3 uses on the site) */
+.trajectStep[data-size="unknown"] {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: #315CFF;
+  letter-spacing: -0.02em;
 }
 
 .trajectArrow {

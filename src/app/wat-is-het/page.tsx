@@ -84,20 +84,20 @@ export default function WatIsHetPage() {
                 <p>Stress is geen defect. Het is een systeem dat werkt — je lichaam bereidt zich voor op actie. Cortisol stijgt, hartslag gaat omhoog, spieren spannen zich. Dat is normaal en nuttig.</p>
                 <p>Problematisch wordt het wanneer dat systeem langdurig geactiveerd blijft <em>zonder voldoende hersteltijd</em>. Of wanneer de drempel voor activatie steeds lager wordt.</p>
 
-                <div className={styles.diagram} role="img" aria-label="Cyclus: rust, activatie, herstel">
-                  <div className={styles.diagramStep}>
-                    <span className={`mono ${styles.diagramLabel}`}>RUST</span>
-                    <div className={styles.diagramBar} style={{ '--h': '30%' } as React.CSSProperties} />
+                <div className={styles.diagram} role="img" aria-label="Cyclus van rust naar activatie naar herstel — weergegeven als typografische schaal">
+                  <div className={styles.diagramWord} data-state="rust">
+                    <span className={`mono ${styles.diagramLabel}`}>01</span>
+                    <span className={styles.diagramTerm}>RUST</span>
                   </div>
-                  <span className={`mono ${styles.diagramArrow}`}>→</span>
-                  <div className={styles.diagramStep}>
-                    <span className={`mono ${styles.diagramLabel}`}>ACTIVATIE</span>
-                    <div className={styles.diagramBar} style={{ '--h': '90%', background: 'var(--color-accent)' } as React.CSSProperties} />
+                  <span className={`mono ${styles.diagramArrow}`} aria-hidden="true">→</span>
+                  <div className={styles.diagramWord} data-state="activatie">
+                    <span className={`mono ${styles.diagramLabel}`}>02</span>
+                    <span className={styles.diagramTerm}>ACTIVATIE</span>
                   </div>
-                  <span className={`mono ${styles.diagramArrow}`}>→</span>
-                  <div className={styles.diagramStep}>
-                    <span className={`mono ${styles.diagramLabel}`}>HERSTEL</span>
-                    <div className={styles.diagramBar} style={{ '--h': '30%' } as React.CSSProperties} />
+                  <span className={`mono ${styles.diagramArrow}`} aria-hidden="true">→</span>
+                  <div className={styles.diagramWord} data-state="herstel">
+                    <span className={`mono ${styles.diagramLabel}`}>03</span>
+                    <span className={styles.diagramTerm}>HERSTEL</span>
                   </div>
                 </div>
 

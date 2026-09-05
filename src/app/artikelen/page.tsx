@@ -61,6 +61,9 @@ export default function ArtikelenPage() {
     ? artikelen
     : artikelen.filter(a => a.category === activeFilter)
 
+  const featured = activeFilter === 'ALLES' ? filtered[0] : null
+  const listItems = featured ? filtered.slice(1) : filtered
+
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
@@ -105,28 +108,43 @@ export default function ArtikelenPage() {
               Niks gevonden. Kan ook een keer lekker zijn.
             </p>
           ) : (
-            <ol className={styles.artikelList} aria-label={`Artikelen: ${activeFilter}`}>
-              {filtered.map((artikel) => (
-                <li key={artikel.num} className={styles.artikelItem}>
-                  <Link href={`/artikelen/${artikel.slug}`} className={styles.artikelLink}>
-                    <div className={styles.artikelLeft}>
-                      <span className={`mono ${styles.artikelNum}`}>{artikel.num}</span>
-                      <div className={styles.artikelInfo}>
-                        {artikel.isNew && (
-                          <span className={`mono ${styles.newBadge}`}>NIEUW</span>
-                        )}
-                        <h2 className={styles.artikelTitle}>{artikel.title}</h2>
-                      </div>
+            <>
+              {featured && (
+                <div className={styles.featuredWrap}>
+                  <span className={styles.featuredNumBg} aria-hidden="true">{featured.num}</span>
+                  <Link href={`/artikelen/${featured.slug}`} className={styles.featuredLink}>
+                    <div className={styles.featuredMeta}>
+                      {featured.isNew && <span className={`mono ${styles.newBadge}`}>NIEUW</span>}
+                      <span className={`mono ${styles.artikelCat}`}>{featured.category}</span>
+                      <span className={`mono ${styles.artikelTime}`}>{featured.readtime}</span>
                     </div>
-                    <div className={styles.artikelRight}>
-                      <span className={`mono ${styles.artikelCat}`}>{artikel.category}</span>
-                      <span className={`mono ${styles.artikelDate}`}>{artikel.date}</span>
-                      <span className={`mono ${styles.artikelTime}`}>{artikel.readtime}</span>
-                    </div>
+                    <h2 className={styles.featuredTitle}>{featured.title}</h2>
                   </Link>
-                </li>
-              ))}
-            </ol>
+                </div>
+              )}
+              <ol className={styles.artikelList} aria-label={`Artikelen: ${activeFilter}`}>
+                {listItems.map((artikel) => (
+                  <li key={artikel.num} className={styles.artikelItem}>
+                    <Link href={`/artikelen/${artikel.slug}`} className={styles.artikelLink}>
+                      <div className={styles.artikelLeft}>
+                        <span className={`mono ${styles.artikelNum}`}>{artikel.num}</span>
+                        <div className={styles.artikelInfo}>
+                          {artikel.isNew && (
+                            <span className={`mono ${styles.newBadge}`}>NIEUW</span>
+                          )}
+                          <h2 className={styles.artikelTitle}>{artikel.title}</h2>
+                        </div>
+                      </div>
+                      <div className={styles.artikelRight}>
+                        <span className={`mono ${styles.artikelCat}`}>{artikel.category}</span>
+                        <span className={`mono ${styles.artikelDate}`}>{artikel.date}</span>
+                        <span className={`mono ${styles.artikelTime}`}>{artikel.readtime}</span>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </>
           )}
         </div>
       </section>

@@ -3,12 +3,32 @@
   color: var(--color-dark-text);
   padding-top: var(--s-10);
   padding-bottom: var(--s-8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ghost wordmark — bleeds across full footer bottom edge */
+.ghostWordmark {
+  position: absolute;
+  bottom: -0.08em;
+  left: -0.02em;
+  font-size: clamp(6rem, 18vw, 15rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: rgba(242, 239, 231, 0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
   gap: var(--s-10);
+  position: relative;
+  z-index: 1;
 }
 
 .top {
@@ -88,6 +108,12 @@
 .bottom .mono {
   font-size: var(--text-xs);
   color: var(--color-text-muted-dark);
+}
+
+.disclaimer {
+  font-size: clamp(0.75rem, 1.2vw, 0.9375rem);
+  letter-spacing: 0.05em;
+  color: rgba(242, 239, 231, 0.35);
 }
 
 @media (max-width: 900px) {
